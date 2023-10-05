@@ -1,0 +1,54 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Page Demo</title>
+    <style>
+        /* Center the content vertically and horizontally */
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cute Font', cursive; /* You can replace 'Cute Font' with your preferred cute font */
+        }
+
+        /* Style the box */
+        .box {
+            text-align: center;
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        /* Style the button */
+        .button {
+            background-color: #ff6b6b;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+{% csrf_token %}
+<div class="box">
+        <h2>click the button to complete the form</h2>
+        <button class="button" onclick="window.location.href='{% url 'registration' %}'">Complete Details</button>
+
+    <script>
+        function redirectToDetailsPage() {
+            // Replace this with the actual URL of your details page
+            window.location.href = 'complete-details.html';
+        }
+    </script>
+    </div>
+
+</body>
+</html>

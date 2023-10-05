@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="UTF-8">
+        <title>Details</title>
+        <style>
+        *{
+    box-sizing: border-box;
+}
+body{
+
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: flex;
+    margin:0;
+}
+.container{
+    background: linear-gradient(to top right, #33cccc 20%, #003366 70%);
+
+    border-radius: 10px;
+    box-shadow: 10px 20px 25px black;
+    overflow: hidden;
+    max-width: 100%;
+    width: 40%;
+}
+.header{
+    border-bottom: 1px sold #f0f0f0;
+<!--   background-color: #f7f7f7;-->
+   padding:40px 40px;
+}
+.header h2{
+    margin: 0;
+    text-align: center;
+}
+.form{
+    padding: 5px 50px;
+
+}
+.form-control{
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    position: relative;
+}
+.form-control label{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.form-control input{
+    border: 2px solid #f0f0f0;
+    border-radius: 4px;
+    display: block;
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+}
+.form-control input:focus{
+    outline: none;
+    border-color: #f7f7f7;
+}
+
+.form-control textarea{
+    border: 2px solid #f0f0f0;
+    border-radius: 4px;
+    display: block;
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+}
+.form-control textarea:focus{
+    outline: none;
+    border-color: #f7f7f7;
+}
+.form-control select{
+    border: 2px solid #f0f0f0;
+    border-radius: 4px;
+    display: block;
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+}
+.form-control select:focus{
+    outline: none;
+    border-color: #f7f7f7;
+}
+
+
+<!--.form button{-->
+<!--    background-color: #0099cc;-->
+<!--    border:none;-->
+<!--    color : white;-->
+<!--    display: block;-->
+<!--    font-size: 20px;-->
+<!--    width:50%;-->
+<!--    margin-top: 20px;-->
+<!--    padding:10px;-->
+<!--    border-radius: 12px;-->
+<!--     justify-content: space-between;-->
+<!--}-->
+/* Style the button container */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        /* Style the buttons */
+        button {
+            padding: 10px 20px;
+            background-color: #0099cc;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 15px;
+            width:45%;
+
+
+        }
+
+        </style>
+
+        <script>
+var stateObject = {
+"Kerala":
+ { "Palakkad": ["Ottapalam", "Vaniyamkulam","Pattambi","Shornur","Nemmara","Kanjikode"],
+"Thrissur": ["Aranattukara", "Laloor","Irinjalakuda","Chavakkad","Chalakudy"],
+"Kozhikkode": ["Elathur", "Mukkam","Beypore","Vatakara","Thamarassery","Perambra"],
+"Ernamkulam":["Mattancherry","Kochi","Aluva","Angamali","Muvattupuzha","Perumbavur"],
+"Malappuram":["Manjeri","Nilambur","Tirur","Kottakkal","Ponnani","Perinthalmanna"]
+},
+"Tamilnadu": {
+"Chennai": ["Perambur", "Adyar"],
+"Coimbatore": ["Annur", "Perur"]
+},
+"Karnataka": {
+"Bangalore": ["Koramangala", "Jayanagar"],
+"Udupi": ["Karkala", "Udupi"]
+},
+}
+window.onload = function () {
+var stateSel = document.getElementById("stateSel"),
+distSel = document.getElementById("distSel"),
+branchSel = document.getElementById("branchSel");
+for (var state in stateObject) {
+stateSel.options[stateSel.options.length] = new Option(state, state);
+}
+stateSel.onchange = function () {
+distSel.length = 1; // remove all options bar first
+branchSel.length = 1; // remove all options bar first
+if (this.selectedIndex < 1) return; // done
+for (var district in stateObject[this.value]) {
+distSel.options[distSel.options.length] = new Option(district, district);
+}
+}
+stateSel.onchange(); // reset in case page is reloaded
+distSel.onchange = function () {
+branchSel.length = 1; // remove all options bar first
+if (this.selectedIndex < 1) return; // done
+var branch = stateObject[stateSel.value][this.value];
+for (var i = 0; i < branch.length; i++) {
+branchSel.options[branchSel.options.length] = new Option(branch[i], branch[i]);
+}
+}
+}
+</script>
+
+    </head>
+<body>
+    <div class="container">
+        <div class = "header">
+            <br>
+            <h2>Create a new account</h2>
+        </div>
+        <form class="form" id="form" method="POST"  action="registration" >
+            {% csrf_token %}
+            <div class="form-control">
+                <label>Name:</label>
+                <input type="text" placeholder="Enter your name" name="name">
+            </div>
+
+            <div class="form-control">
+                <label>Date Of Birth:</label>
+                <input type="date" placeholder="Enter your dob" id="dob" name="dob">
+            </div>
+
+            <div class="form-control">
+                <label>Age:</label>
+                <input type="number" placeholder="Enter your Age" id="age" name="age">
+            </div>
+
+            <script>
+        // Get today's date in YYYY-MM-DD format
+        function getTodayDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Set the max attribute of the date input to today's date
+        document.getElementById('dob').setAttribute('max', getTodayDate());
+
+        // Prevent future date selection and calculate age
+        document.getElementById('dob').addEventListener('input', function() {
+            const selectedDate = new Date(this.value);
+            const today = new Date();
+            const age = today.getFullYear() - selectedDate.getFullYear();
+            document.getElementById('age').value = age;
+
+            if (selectedDate > today) {
+                this.value = getTodayDate();
+            }
+        });
+    </script>
+
+                <label>Gender:</label>
+<!--                    <input type="radio" name="gender" value="male"> Male-->
+<!--                    <input type="radio" name="gender" value="female"> Female-->
+<!--                    <input type="radio" name="gender" value="others"> Others<br><br>-->
+
+                    <input type="radio" name="gender" value="Male" checked=""> Male
+                    <input type="radio" name="gender" value="Female"> Female
+                    <input type="radio" name="gender" value="Other"> Other<br><br>
+
+            <div class="form-control">
+                <label>Phone No:</label>
+                <input type="number" id="phone" name="phone" placeholder="Enter your number" minlength="10" maxlength="10">
+            </div>
+
+            <script>
+        // Get the phone input element
+        const phoneInput = document.getElementById('phone');
+
+        // Add an input event listener to limit input to 10 digits
+        phoneInput.addEventListener('input', function() {
+            const inputValue = this.value;
+
+            // Remove non-digit characters (e.g., spaces)
+            const digitsOnly = inputValue.replace(/\D/g, '');
+
+            // Limit to 10 digits
+            const trimmedValue = digitsOnly.slice(0, 10);
+
+            // Update the input field with the cleaned value
+            this.value = trimmedValue;
+        });
+    </script>
+
+            <div class="form-control">
+                <label>Email:</label>
+                <input type="email" placeholder="Enter your email address" name="email" >
+            </div>
+            <div class="form-control">
+                <label>Address:</label>
+                <textarea rows="4" cols="50" name="address" id="address" placeholder="Enter your address"></textarea>
+            </div>
+             <script>
+        // Get the address input element and error message span
+        const addressInput = document.getElementById('address');
+        const addressError = document.getElementById('addressError');
+
+        // Function to validate address
+        function validateAddress() {
+            const addressValue = addressInput.value.trim(); // Remove leading/trailing spaces
+            if (addressValue === '') {
+                addressError.textContent = 'Address cannot be empty';
+            } else {
+                addressError.textContent = '';
+            }
+        }
+
+        // Add input event listener for address validation
+        addressInput.addEventListener('input', validateAddress);
+    </script>
+
+            <div class="form-control">
+                <label>Select State:</label>
+                <select name="state" id="stateSel" size="1">
+                <option value="" selected="selected">Select Your State</option>
+                </select>
+            </div>
+            <div class="form-control">
+                <label>Select District:</label>
+                    <select name="district" id="distSel" size="1">
+                    <option value="" selected="selected">Please select State first</option>
+                    </select>
+            </div>
+            <div class="form-control">
+                <label>Select Branch:</label>
+                    <select name="branch" id="branchSel" size="1">
+                    <option value="" selected="selected" >Please select District first</option>
+                    </select>
+            </div>
+            <div class="form-control">
+             <label>Account Type:</label>
+              <select name="account" id="account">
+                  <option value="" selected="selected" >Please select Account type</option>
+                <option value="Savings Account">Savings Account</option>
+                <option value="Current Account">Current Account</option>
+                <option value="Personal Account">Personal Account</option>
+                <option value="Nominal Account">Nominal Account</option>
+              </select>
+            </div>
+<!--             <div class="form-control">-->
+                <label>Materials Provided:</label>
+                <input type="checkbox" id="debitcard" name="materials" value="debitcard">Debitcard
+                <input type="checkbox" id="creditcard" name="materials" value="creditcard">Creditcard
+                <input type="checkbox" id="checkbook" name="materials" value="checkbook">Checkbook<br><br>
+
+            <center><button input type="submit"  id="button">Submit</button></center>&nbsp;
+<!--            <button input type=""  id="button2" onclick="href='{% url 'logout' %}'">Logout</button>-->
+<!--            <script>-->
+<!--        function redirectToLogoutPage() {-->
+<!--            // Replace this with the actual URL of your details page-->
+<!--            window.location.href = 'log_out.html';-->
+<!--        }-->
+<!--    </script>-->
+         </form>
+        <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <center><button type="submit">Logout</button></center>
+</form>
+        {% for msg in messages %}
+        <h2>{{msg}}</h2>
+        {% endfor %}
+<center><a href="/">Return to Homepage</a></center>
+    </div>
+
+
+</body>
+</html>
